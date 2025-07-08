@@ -1,6 +1,6 @@
-require 'watchlist'
+require_relative 'watchlist'
 
-watchlist = Watchlist.new(movies.csv)
+watchlist = Watchlist.new('movies.csv')
 
 def display_menu
   puts "\n🎬 Movie Watchlist Manager"

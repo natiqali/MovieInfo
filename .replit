@@ -8,3 +8,15 @@ channel = "stable-24_05"
 
 [gitHubImport]
 requiredFiles = [".replit", "replit.nix"]
+
+[workflows]
+runButton = "Run Movie Watchlist"
+
+[[workflows.workflow]]
+name = "Run Movie Watchlist"
+author = 44748904
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "bundle exec ruby app.rb"

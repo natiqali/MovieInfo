@@ -1,5 +1,5 @@
 # watchlist.rb
-require_relative 'movies'
+require_relative 'movie'
 require_relative 'storage'
 
 class Watchlist
