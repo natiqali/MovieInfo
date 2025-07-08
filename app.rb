@@ -1,10 +1,5 @@
 require_relative 'watchlist'
 
-def generate_watch_link(title, year)
-  slug = title.downcase.gsub(/[^a-z0-9\s]/, '').strip.gsub(/\s+/, '-')
-  "https://www.lookmovie2.to/movies/view/#{slug}-#{year}"
-end
-
 watchlist = Watchlist.new('movies.csv')
 
 def display_menu
@@ -16,8 +11,9 @@ def display_menu
   puts "3️⃣  Delete Movie"
   puts "4️⃣  Display All Movies"
   puts "5️⃣  Display Movies by Genre"
-  puts "6️⃣  Exit"
-  print "\n👉 Choose an option (1–6): "
+  puts "6️⃣  Search Movie Database"
+  puts "7️⃣  Exit"
+  print "\n👉 Choose an option (1–7): "
 end
 
 loop do
@@ -63,10 +59,17 @@ loop do
         break if rating == nil
       end
     end
-    print 'Enter release year: '
-    year = gets.chomp.to_i
-    link = generate_watch_link(title, year)
-    watchlist.add_movie(title, genre, status, rating, year, link)
+    
+    # Search for movie and generate link
+    puts "\n🔍 Searching for movie in database..."
+    movie_info = watchlist.find_and_generate_link(title)
+    
+    if movie_info[:link]
+      watchlist.add_movie(title, genre, status, rating, movie_info[:year], movie_info[:link])
+    else
+      puts "❌ Could not find movie in database. Adding without link."
+      watchlist.add_movie(title, genre, status, rating, nil, nil)
+    end
 
 
     
@@ -125,6 +128,15 @@ loop do
     end
     watchlist.display_movies(genre)
   when 6
+    print 'Enter movie title to search: '
+    search_title = gets.chomp
+    movie_info = watchlist.find_and_generate_link(search_title)
+    if movie_info[:link]
+      puts "🎬 Watch link: #{movie_info[:link]}"
+    else
+      puts "❌ Movie not found in database."
+    end
+  when 7
     puts 'Goodbye!'
     break
   else

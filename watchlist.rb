@@ -1,6 +1,7 @@
 # watchlist.rb
 require_relative 'movie'
 require_relative 'storage'
+require_relative 'movie_database'
 
 class Watchlist
   def initialize(filename)
@@ -8,9 +9,18 @@ class Watchlist
     @movies = Storage.load_movies(filename)
   end
   
-  def generate_watch_link(title, year)
-    slug = title.downcase.gsub(/[^a-z0-9\s]/, '').strip.gsub(/\s+/, '-')
-    "https://www.lookmovie2.to/movies/view/#{slug}-#{year}"
+  def find_and_generate_link(title)
+    movie_data = MovieDatabase.search_movie(title)
+    if movie_data
+      link = MovieDatabase.generate_watch_link(movie_data)
+      puts "🎬 Found: #{movie_data[:title]} (#{movie_data[:year]})"
+      return { link: link, year: movie_data[:year] }
+    else
+      puts "⚠️ Movie not found in database. Available movies:"
+      puts MovieDatabase.list_available_movies.first(10).join(", ")
+      puts "... and more"
+      return { link: nil, year: nil }
+    end
   end
 
   def add_movie(title, genre, status, rating = nil, year = nil, link = nil)
