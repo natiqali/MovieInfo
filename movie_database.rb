@@ -75,19 +75,20 @@ class MovieDatabase
                 .strip
                 .gsub(/\s+/, '-')
     
-    # Generate both URL formats since some movies use IMDb ID and others don't
+    # Generate exactly 2 URL formats
     links = []
     
     if imdb_id
-      # IMDb ID format
+      # IMDb ID format (without 'tt' prefix)
       imdb_number = imdb_id.gsub(/^tt/, '')
       links << "https://www.lookmovie2.to/movies/view/#{imdb_number}-#{slug}-#{year}"
     end
     
-    # Title-year format
+    # Title-year format (always included as fallback)
     links << "https://www.lookmovie2.to/movies/view/#{slug}-#{year}"
     
-    links
+    # Remove duplicates and return exactly 2 links
+    links.uniq
   end
 
   def self.list_available_movies
