@@ -72,7 +72,14 @@ class MovieDatabase
     
     # Try IMDb ID first for more accurate links
     if imdb_id
-      "https://www.lookmovie2.to/movies/view/#{imdb_id}"
+      # Remove 'tt' prefix from IMDb ID and create slug from title
+      imdb_number = imdb_id.gsub(/^tt/, '')
+      slug = title.downcase
+                  .gsub(/[^a-z0-9\s]/, '')
+                  .strip
+                  .gsub(/\s+/, '-')
+      
+      "https://www.lookmovie2.to/movies/view/#{imdb_number}-#{slug}-#{year}"
     else
       # Fallback to title-year slug
       slug = title.downcase
