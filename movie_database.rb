@@ -60,7 +60,6 @@ class MovieDatabase
         return value
       end
     end
-    
     nil
   end
 
