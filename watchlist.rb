@@ -13,7 +13,7 @@ class Watchlist
     "https://www.lookmovie2.to/movies/view/#{slug}-#{year}"
   end
 
-  def add_movie(title, genre, status, rating = nil)
+  def add_movie(title, genre, status, rating = nil, year = nil, link = nil)
     if !title.is_a?(String) || title.strip.empty? || title.length > 20 || title.match(/[^a-zA-Z\s]+/)
       puts "❌ Invalid title. Must be a string, 1–20 characters, only letters and spaces."
       return
@@ -39,7 +39,7 @@ class Watchlist
       return
     end
 
-    movie = Movie.new(title, genre, status, rating)
+    movie = Movie.new(title: title, genre: genre, status: status, rating: rating, year: year, link: link)
     @movies << movie
     Storage.save_movies(@filename, @movies)
     puts "Movie #{title} , genre #{genre} , status #{status} , rating #{rating} added to the watchlist!"

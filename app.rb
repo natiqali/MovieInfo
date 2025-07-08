@@ -1,5 +1,10 @@
 require_relative 'watchlist'
 
+def generate_watch_link(title, year)
+  slug = title.downcase.gsub(/[^a-z0-9\s]/, '').strip.gsub(/\s+/, '-')
+  "https://www.lookmovie2.to/movies/view/#{slug}-#{year}"
+end
+
 watchlist = Watchlist.new('movies.csv')
 
 def display_menu

@@ -8,13 +8,12 @@ class Storage
 
     CSV.read(filename, headers: true).map do |row|
       Movie.new(
-        row["title"],
-        row["genre"],
-        row["status"],
-        row["rating"]&.to_i,
-        row["year"]&.to_i,
-        row["link"]
-        
+        title: row["title"],
+        genre: row["genre"],
+        status: row["status"],
+        rating: row["rating"]&.to_i,
+        year: row["year"]&.to_i,
+        link: row["link"]
       )
     end
   end
