@@ -1,4 +1,4 @@
-title,genre,status,rating
+title,genre,status,rating,year,link
 Inception,Action,to_watch,5
 The Matrix,Action,watched,5
 La La Land,Romance,watching,4
@@ -11,3 +11,6 @@ Interstellar,Action,watching,5
 Notting Hill,Romance,watched,4
 Step Brothers,Comedy,watched,3
 Edge of Tomorrow,Action,to_watch,
+,,,
+games,action,watching,
+guns n roses,romance,watched,

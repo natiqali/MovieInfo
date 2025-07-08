@@ -7,14 +7,19 @@ class Watchlist
     @filename = filename
     @movies = Storage.load_movies(filename)
   end
+  
+  def generate_watch_link(title, year)
+    slug = title.downcase.gsub(/[^a-z0-9\s]/, '').strip.gsub(/\s+/, '-')
+    "https://www.lookmovie2.to/movies/view/#{slug}-#{year}"
+  end
 
   def add_movie(title, genre, status, rating = nil)
-    if !title.is_a?(String) || title.strip.empty? || title.length > 20 || title.match(/[^a-zA-Z\s]/)
+    if !title.is_a?(String) || title.strip.empty? || title.length > 20 || title.match(/[^a-zA-Z\s]+/)
       puts "❌ Invalid title. Must be a string, 1–20 characters, only letters and spaces."
       return
     end
 
-    unless ["Action", "Comedy", "Romance"].include?(genre)
+    unless ["Action", "Comedy", "Romance","action","comedy","romance"].include?(genre)
       puts "❌ Invalid genre. Choose from: Action, Comedy, Romance."
       return
     end
@@ -37,7 +42,7 @@ class Watchlist
     movie = Movie.new(title, genre, status, rating)
     @movies << movie
     Storage.save_movies(@filename, @movies)
-    puts "✅ Movie added to the watchlist."
+    puts "Movie #{title} , genre #{genre} , status #{status} , rating #{rating} added to the watchlist!"
   end
 
   def update_movie(title, rating, status, genre)
@@ -86,21 +91,26 @@ class Watchlist
   end
 
   def display_movies(genre = nil)
-    valid_genres = ["Action", "Comedy", "Romance"]
+    valid_genres = ["action", "comedy", "romance"]
     to_display = @movies
 
-    if genre && valid_genres.include?(genre)
-      to_display = @movies.select { |m| m.genre == genre }
-    elsif genre
-      puts "⚠️ Invalid genre. Allowed: #{valid_genres.join(', ')}"
-      return
+    if genre
+      normalized_genre = genre.downcase
+      if valid_genres.include?(normalized_genre)
+        to_display = @movies.select { |m| m.genre.to_s.downcase == normalized_genre }
+      else
+        puts "⚠️ Invalid genre. Allowed: #{valid_genres.map(&:capitalize).join(', ')}"
+        return
+      end
     end
 
     if to_display.empty?
       puts "📭 No movies to display."
     else
       to_display.each do |movie|
-        puts "#{movie.title} - #{movie.genre} - #{movie.status} - #{movie.rating || 'No rating'}"
+        puts "#{movie.title} - #{movie.genre} - #{movie.status} - #{movie.rating || 'No rating'} - #{movie.year}"
+        puts "🎬 Watch now: #{movie.link}" if movie.link
+
       end
     end
   end
