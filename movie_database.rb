@@ -70,25 +70,24 @@ class MovieDatabase
     year = movie_data[:year]
     imdb_id = movie_data[:imdb_id]
     
-    # Try IMDb ID first for more accurate links
+    slug = title.downcase
+                .gsub(/[^a-z0-9\s]/, '')
+                .strip
+                .gsub(/\s+/, '-')
+    
+    # Generate both URL formats since some movies use IMDb ID and others don't
+    links = []
+    
     if imdb_id
-      # Remove 'tt' prefix from IMDb ID and create slug from title
+      # IMDb ID format
       imdb_number = imdb_id.gsub(/^tt/, '')
-      slug = title.downcase
-                  .gsub(/[^a-z0-9\s]/, '')
-                  .strip
-                  .gsub(/\s+/, '-')
-      
-      "https://www.lookmovie2.to/movies/view/#{imdb_number}-#{slug}-#{year}"
-    else
-      # Fallback to title-year slug
-      slug = title.downcase
-                  .gsub(/[^a-z0-9\s]/, '')
-                  .strip
-                  .gsub(/\s+/, '-')
-      
-      "https://www.lookmovie2.to/movies/view/#{slug}-#{year}"
+      links << "https://www.lookmovie2.to/movies/view/#{imdb_number}-#{slug}-#{year}"
     end
+    
+    # Title-year format
+    links << "https://www.lookmovie2.to/movies/view/#{slug}-#{year}"
+    
+    links
   end
 
   def self.list_available_movies

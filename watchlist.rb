@@ -12,9 +12,13 @@ class Watchlist
   def find_and_generate_link(title)
     movie_data = MovieDatabase.search_movie(title)
     if movie_data
-      link = MovieDatabase.generate_watch_link(movie_data)
+      links = MovieDatabase.generate_watch_link(movie_data)
       puts "🎬 Found: #{movie_data[:title]} (#{movie_data[:year]})"
-      return { link: link, year: movie_data[:year] }
+      puts "📺 Watch links (one should work):"
+      links.each_with_index do |link, index|
+        puts "  #{index + 1}. #{link}"
+      end
+      return { link: links.first, year: movie_data[:year] }
     else
       puts "⚠️ Movie not found in database. Available movies:"
       puts MovieDatabase.list_available_movies.first(10).join(", ")
