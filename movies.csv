@@ -1,16 +1,17 @@
 title,genre,status,rating,year,link
-Inception,Action,to_watch,5
-The Matrix,Action,watched,5
-La La Land,Romance,watching,4
-Superbad,Comedy,watched,3
-Titanic,Romance,watched,5
-Die Hard,Action,to_watch,
-Amélie,Romance,watching,4
-The Hangover,Comedy,to_watch,2
-Interstellar,Action,watching,5
-Notting Hill,Romance,watched,4
-Step Brothers,Comedy,watched,3
-Edge of Tomorrow,Action,to_watch,
-,,,
-games,action,watching,
-guns n roses,romance,watched,
+Inception,Action,to_watch,5,,
+The Matrix,Action,watched,5,,
+La La Land,Romance,watching,4,,
+Superbad,Comedy,watched,3,,
+Titanic,Romance,watched,5,,
+Die Hard,Action,to_watch,,,
+Amélie,Romance,watching,4,,
+The Hangover,Comedy,to_watch,2,,
+Interstellar,Action,watching,5,,
+Notting Hill,Romance,watched,4,,
+Step Brothers,Comedy,watched,3,,
+Edge of Tomorrow,Action,to_watch,,,
+,,,,,
+games,action,watching,,,
+guns n roses,romance,watched,,,
+batman,action,watched,2,2022,https://www.lookmovie2.to/movies/view/batman-2022
